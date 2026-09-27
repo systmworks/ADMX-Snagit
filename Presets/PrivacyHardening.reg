@@ -3,8 +3,20 @@ Windows Registry Editor Version 5.00
 ; Privacy Hardening
 ; Minimizes what Snagit sends outside the organization's network and keeps updates under administrative control, for environments with internet security restrictions or data-egress policies.
 ;
+; Snagit 2025 and Snagit 2026 store these settings under different registry keys.
+; This file includes both; only the section matching your installed Snagit version
+; actually takes effect - the other is harmless and unused.
 ; HKEY_CURRENT_USER lines apply per-user; import under the target user's profile (or HKEY_USERS\<SID>\...).
 
+; ----- Snagit 2025 -----
+[HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit\25]
+"NoRegistrationDialogSupport"=dword:00000001
+"NoAutoUpdateSupport"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\TechSmith\Snagit\25]
+"TUDIOptedIn"=dword:00000000
+
+; ----- Snagit 2026 -----
 [HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit]
 "NoRegistrationDialogSupport"=dword:00000001
 "NoAutoUpdateSupport"=dword:00000001

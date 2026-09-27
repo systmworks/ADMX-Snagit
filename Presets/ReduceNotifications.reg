@@ -3,8 +3,20 @@ Windows Registry Editor Version 5.00
 ; Reduce Notifications & Prompts
 ; Suppresses the post-install registration dialog and in-product promotional/help notification banners, for organizations that deploy a site key centrally and don't want users seeing registration or upsell-style prompts.
 ;
+; Snagit 2025 and Snagit 2026 store these settings under different registry keys.
+; This file includes both; only the section matching your installed Snagit version
+; actually takes effect - the other is harmless and unused.
 ; HKEY_CURRENT_USER lines apply per-user; import under the target user's profile (or HKEY_USERS\<SID>\...).
 
+; ----- Snagit 2025 -----
+[HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit\25]
+"NoRegistrationDialogSupport"=dword:00000001
+"TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\TechSmith\Snagit\25]
+"TUDIOptedIn"=dword:00000000
+
+; ----- Snagit 2026 -----
 [HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit]
 "NoRegistrationDialogSupport"=dword:00000001
 "TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW"=dword:00000000

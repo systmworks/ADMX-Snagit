@@ -12,162 +12,328 @@
   </supportedOn>
   <categories>
     <category name="Snagit" displayName="$(string.Snagit)" explainText="$(string.Snagit_Explain)" />
-    <category name="Snagit_Capture" displayName="$(string.Snagit_Capture)">
+    <category name="Snagit2025" displayName="$(string.Snagit2025)" explainText="$(string.Snagit2025_Explain)">
       <parentCategory ref="Snagit" />
     </category>
-    <category name="Snagit_Updates" displayName="$(string.Snagit_Updates)">
+    <category name="Snagit2026" displayName="$(string.Snagit2026)" explainText="$(string.Snagit2026_Explain)">
       <parentCategory ref="Snagit" />
     </category>
-    <category name="Snagit_Privacy" displayName="$(string.Snagit_Privacy)">
-      <parentCategory ref="Snagit" />
+    <category name="Snagit2025_Capture" displayName="$(string.Snagit2025_Capture)">
+      <parentCategory ref="Snagit2025" />
     </category>
-    <category name="Snagit_Storage" displayName="$(string.Snagit_Storage)">
-      <parentCategory ref="Snagit" />
+    <category name="Snagit2025_Updates" displayName="$(string.Snagit2025_Updates)">
+      <parentCategory ref="Snagit2025" />
     </category>
-    <category name="Snagit_Virtualization" displayName="$(string.Snagit_Virtualization)">
-      <parentCategory ref="Snagit" />
+    <category name="Snagit2025_Privacy" displayName="$(string.Snagit2025_Privacy)">
+      <parentCategory ref="Snagit2025" />
+    </category>
+    <category name="Snagit2025_Storage" displayName="$(string.Snagit2025_Storage)">
+      <parentCategory ref="Snagit2025" />
+    </category>
+    <category name="Snagit2025_Virtualization" displayName="$(string.Snagit2025_Virtualization)">
+      <parentCategory ref="Snagit2025" />
+    </category>
+    <category name="Snagit2026_Capture" displayName="$(string.Snagit2026_Capture)">
+      <parentCategory ref="Snagit2026" />
+    </category>
+    <category name="Snagit2026_Updates" displayName="$(string.Snagit2026_Updates)">
+      <parentCategory ref="Snagit2026" />
+    </category>
+    <category name="Snagit2026_Privacy" displayName="$(string.Snagit2026_Privacy)">
+      <parentCategory ref="Snagit2026" />
+    </category>
+    <category name="Snagit2026_Storage" displayName="$(string.Snagit2026_Storage)">
+      <parentCategory ref="Snagit2026" />
+    </category>
+    <category name="Snagit2026_Virtualization" displayName="$(string.Snagit2026_Virtualization)">
+      <parentCategory ref="Snagit2026" />
     </category>
   </categories>
   <policies>
-    <policy name="Snagit_DisableImageCapture" class="Machine"
-            displayName="$(string.Snagit_DisableImageCapture)"
-            explainText="$(string.Snagit_DisableImageCapture_Explain)"
+    <policy name="Snagit2025_DisableImageCapture" class="Machine"
+            displayName="$(string.Snagit2025_DisableImageCapture)"
+            explainText="$(string.Snagit2025_DisableImageCapture_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="NoImageCaptureSupport">
+      <parentCategory ref="Snagit2025_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2026_DisableImageCapture" class="Machine"
+            displayName="$(string.Snagit2026_DisableImageCapture)"
+            explainText="$(string.Snagit2026_DisableImageCapture_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="NoImageCaptureSupport">
-      <parentCategory ref="Snagit_Capture" />
+      <parentCategory ref="Snagit2026_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_DisableVideoCapture" class="Machine"
+            displayName="$(string.Snagit2025_DisableVideoCapture)"
+            explainText="$(string.Snagit2025_DisableVideoCapture_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="NoVideoCaptureSupport">
+      <parentCategory ref="Snagit2025_Capture" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_DisableVideoCapture" class="Machine"
-            displayName="$(string.Snagit_DisableVideoCapture)"
-            explainText="$(string.Snagit_DisableVideoCapture_Explain)"
+    <policy name="Snagit2026_DisableVideoCapture" class="Machine"
+            displayName="$(string.Snagit2026_DisableVideoCapture)"
+            explainText="$(string.Snagit2026_DisableVideoCapture_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="NoVideoCaptureSupport">
-      <parentCategory ref="Snagit_Capture" />
+      <parentCategory ref="Snagit2026_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_DisablePrinterCapture" class="Machine"
+            displayName="$(string.Snagit2025_DisablePrinterCapture)"
+            explainText="$(string.Snagit2025_DisablePrinterCapture_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="NoPrinterCaptureSupport">
+      <parentCategory ref="Snagit2025_Capture" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_DisablePrinterCapture" class="Machine"
-            displayName="$(string.Snagit_DisablePrinterCapture)"
-            explainText="$(string.Snagit_DisablePrinterCapture_Explain)"
+    <policy name="Snagit2026_DisablePrinterCapture" class="Machine"
+            displayName="$(string.Snagit2026_DisablePrinterCapture)"
+            explainText="$(string.Snagit2026_DisablePrinterCapture_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="NoPrinterCaptureSupport">
-      <parentCategory ref="Snagit_Capture" />
+      <parentCategory ref="Snagit2026_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_DisableAutoUpdate" class="Machine"
+            displayName="$(string.Snagit2025_DisableAutoUpdate)"
+            explainText="$(string.Snagit2025_DisableAutoUpdate_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="NoAutoUpdateSupport">
+      <parentCategory ref="Snagit2025_Updates" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_DisableAutoUpdate" class="Machine"
-            displayName="$(string.Snagit_DisableAutoUpdate)"
-            explainText="$(string.Snagit_DisableAutoUpdate_Explain)"
+    <policy name="Snagit2026_DisableAutoUpdate" class="Machine"
+            displayName="$(string.Snagit2026_DisableAutoUpdate)"
+            explainText="$(string.Snagit2026_DisableAutoUpdate_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="NoAutoUpdateSupport">
-      <parentCategory ref="Snagit_Updates" />
+      <parentCategory ref="Snagit2026_Updates" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_UpdateProxyList" class="Machine"
+            displayName="$(string.Snagit2025_UpdateProxyList)"
+            explainText="$(string.Snagit2025_UpdateProxyList_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" presentation="$(presentation.Snagit2025_UpdateProxyList)">
+      <parentCategory ref="Snagit2025_Updates" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <text id="Snagit2025_UpdateProxyList_Text" valueName="UpdateProxyList" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit2026_UpdateProxyList" class="Machine"
+            displayName="$(string.Snagit2026_UpdateProxyList)"
+            explainText="$(string.Snagit2026_UpdateProxyList_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit2026_UpdateProxyList)">
+      <parentCategory ref="Snagit2026_Updates" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <elements>
+        <text id="Snagit2026_UpdateProxyList_Text" valueName="UpdateProxyList" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit2025_DisableRegistrationDialog" class="Machine"
+            displayName="$(string.Snagit2025_DisableRegistrationDialog)"
+            explainText="$(string.Snagit2025_DisableRegistrationDialog_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="NoRegistrationDialogSupport">
+      <parentCategory ref="Snagit2025_Privacy" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_UpdaterProxyList" class="Machine"
-            displayName="$(string.Snagit_UpdaterProxyList)"
-            explainText="$(string.Snagit_UpdaterProxyList_Explain)"
-            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_UpdaterProxyList)">
-      <parentCategory ref="Snagit_Updates" />
-      <supportedOn ref="SUPPORTED_Snagit2025" />
-      <elements>
-        <text id="Snagit_UpdaterProxyList_Text" valueName="UpdaterProxyList" required="false" />
-      </elements>
-    </policy>
-
-    <policy name="Snagit_DisableRegistrationDialog" class="Machine"
-            displayName="$(string.Snagit_DisableRegistrationDialog)"
-            explainText="$(string.Snagit_DisableRegistrationDialog_Explain)"
+    <policy name="Snagit2026_DisableRegistrationDialog" class="Machine"
+            displayName="$(string.Snagit2026_DisableRegistrationDialog)"
+            explainText="$(string.Snagit2026_DisableRegistrationDialog_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="NoRegistrationDialogSupport">
-      <parentCategory ref="Snagit_Privacy" />
+      <parentCategory ref="Snagit2026_Privacy" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_AllowInProductNotifications" class="Machine"
+            displayName="$(string.Snagit2025_AllowInProductNotifications)"
+            explainText="$(string.Snagit2025_AllowInProductNotifications_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW">
+      <parentCategory ref="Snagit2025_Privacy" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_AllowInProductNotifications" class="Machine"
-            displayName="$(string.Snagit_AllowInProductNotifications)"
-            explainText="$(string.Snagit_AllowInProductNotifications_Explain)"
+    <policy name="Snagit2026_AllowInProductNotifications" class="Machine"
+            displayName="$(string.Snagit2026_AllowInProductNotifications)"
+            explainText="$(string.Snagit2026_AllowInProductNotifications_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW">
-      <parentCategory ref="Snagit_Privacy" />
+      <parentCategory ref="Snagit2026_Privacy" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_AllowAnonymousUsageReporting" class="User"
+            displayName="$(string.Snagit2025_AllowAnonymousUsageReporting)"
+            explainText="$(string.Snagit2025_AllowAnonymousUsageReporting_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="TUDIOptedIn">
+      <parentCategory ref="Snagit2025_Privacy" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_AllowAnonymousUsageReporting" class="User"
-            displayName="$(string.Snagit_AllowAnonymousUsageReporting)"
-            explainText="$(string.Snagit_AllowAnonymousUsageReporting_Explain)"
+    <policy name="Snagit2026_AllowAnonymousUsageReporting" class="User"
+            displayName="$(string.Snagit2026_AllowAnonymousUsageReporting)"
+            explainText="$(string.Snagit2026_AllowAnonymousUsageReporting_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="TUDIOptedIn">
-      <parentCategory ref="Snagit_Privacy" />
+      <parentCategory ref="Snagit2026_Privacy" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit2025_DisableLibraryLocationChange" class="Machine"
+            displayName="$(string.Snagit2025_DisableLibraryLocationChange)"
+            explainText="$(string.Snagit2025_DisableLibraryLocationChange_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" valueName="DataStoreNoMove">
+      <parentCategory ref="Snagit2025_Storage" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_DisableLibraryLocationChange" class="Machine"
-            displayName="$(string.Snagit_DisableLibraryLocationChange)"
-            explainText="$(string.Snagit_DisableLibraryLocationChange_Explain)"
+    <policy name="Snagit2026_DisableLibraryLocationChange" class="Machine"
+            displayName="$(string.Snagit2026_DisableLibraryLocationChange)"
+            explainText="$(string.Snagit2026_DisableLibraryLocationChange_Explain)"
             key="SOFTWARE\TechSmith\Snagit" valueName="DataStoreNoMove">
-      <parentCategory ref="Snagit_Storage" />
-      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <parentCategory ref="Snagit2026_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
       <enabledValue><decimal value="1" /></enabledValue>
       <disabledValue><decimal value="0" /></disabledValue>
     </policy>
 
-    <policy name="Snagit_SetLibraryLocation" class="Machine"
-            displayName="$(string.Snagit_SetLibraryLocation)"
-            explainText="$(string.Snagit_SetLibraryLocation_Explain)"
-            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetLibraryLocation)">
-      <parentCategory ref="Snagit_Storage" />
+    <policy name="Snagit2025_SetLibraryLocation" class="Machine"
+            displayName="$(string.Snagit2025_SetLibraryLocation)"
+            explainText="$(string.Snagit2025_SetLibraryLocation_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" presentation="$(presentation.Snagit2025_SetLibraryLocation)">
+      <parentCategory ref="Snagit2025_Storage" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <elements>
-        <text id="Snagit_SetLibraryLocation_Text" valueName="DataStoreLocation" required="false" />
+        <text id="Snagit2025_SetLibraryLocation_Text" valueName="LibraryStoreDirectory" required="false" />
       </elements>
     </policy>
 
-    <policy name="Snagit_SetUserSettingsPath" class="Machine"
-            displayName="$(string.Snagit_SetUserSettingsPath)"
-            explainText="$(string.Snagit_SetUserSettingsPath_Explain)"
-            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetUserSettingsPath)">
-      <parentCategory ref="Snagit_Storage" />
-      <supportedOn ref="SUPPORTED_Snagit2025" />
+    <policy name="Snagit2026_SetLibraryLocation" class="Machine"
+            displayName="$(string.Snagit2026_SetLibraryLocation)"
+            explainText="$(string.Snagit2026_SetLibraryLocation_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit2026_SetLibraryLocation)">
+      <parentCategory ref="Snagit2026_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
       <elements>
-        <text id="Snagit_SetUserSettingsPath_Text" valueName="AppDataPath" required="false" />
+        <text id="Snagit2026_SetLibraryLocation_Text" valueName="LibraryStoreDirectory" required="false" />
       </elements>
     </policy>
 
-    <policy name="Snagit_SetOutputsInstallPath" class="Machine"
-            displayName="$(string.Snagit_SetOutputsInstallPath)"
-            explainText="$(string.Snagit_SetOutputsInstallPath_Explain)"
-            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetOutputsInstallPath)">
-      <parentCategory ref="Snagit_Storage" />
+    <policy name="Snagit2025_SetUserSettingsPath" class="Machine"
+            displayName="$(string.Snagit2025_SetUserSettingsPath)"
+            explainText="$(string.Snagit2025_SetUserSettingsPath_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" presentation="$(presentation.Snagit2025_SetUserSettingsPath)">
+      <parentCategory ref="Snagit2025_Storage" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <elements>
-        <text id="Snagit_SetOutputsInstallPath_Text" valueName="AccessoryInstallPath" required="false" />
+        <text id="Snagit2025_SetUserSettingsPath_Text" valueName="AppDataPath" required="false" />
       </elements>
     </policy>
 
-    <policy name="Snagit_SetVirtualMachineOptimization" class="Machine"
-            displayName="$(string.Snagit_SetVirtualMachineOptimization)"
-            explainText="$(string.Snagit_SetVirtualMachineOptimization_Explain)"
-            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetVirtualMachineOptimization)">
-      <parentCategory ref="Snagit_Virtualization" />
+    <policy name="Snagit2026_SetUserSettingsPath" class="Machine"
+            displayName="$(string.Snagit2026_SetUserSettingsPath)"
+            explainText="$(string.Snagit2026_SetUserSettingsPath_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit2026_SetUserSettingsPath)">
+      <parentCategory ref="Snagit2026_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <elements>
+        <text id="Snagit2026_SetUserSettingsPath_Text" valueName="AppDataPath" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit2025_SetOutputsInstallPath" class="Machine"
+            displayName="$(string.Snagit2025_SetOutputsInstallPath)"
+            explainText="$(string.Snagit2025_SetOutputsInstallPath_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" presentation="$(presentation.Snagit2025_SetOutputsInstallPath)">
+      <parentCategory ref="Snagit2025_Storage" />
       <supportedOn ref="SUPPORTED_Snagit2025" />
       <elements>
-        <enum id="Snagit_VMOverride_Enum" valueName="VMOverride" required="true">
-          <item displayName="$(string.Snagit_SetVirtualMachineOptimization_Enum_None)">
+        <text id="Snagit2025_SetOutputsInstallPath_Text" valueName="AccessoryInstallPath" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit2026_SetOutputsInstallPath" class="Machine"
+            displayName="$(string.Snagit2026_SetOutputsInstallPath)"
+            explainText="$(string.Snagit2026_SetOutputsInstallPath_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit2026_SetOutputsInstallPath)">
+      <parentCategory ref="Snagit2026_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <elements>
+        <text id="Snagit2026_SetOutputsInstallPath_Text" valueName="AccessoryInstallPath" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit2025_SetVirtualMachineOptimization" class="Machine"
+            displayName="$(string.Snagit2025_SetVirtualMachineOptimization)"
+            explainText="$(string.Snagit2025_SetVirtualMachineOptimization_Explain)"
+            key="SOFTWARE\TechSmith\Snagit\25" presentation="$(presentation.Snagit2025_SetVirtualMachineOptimization)">
+      <parentCategory ref="Snagit2025_Virtualization" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <enum id="Snagit2025_VMOverride_Enum" valueName="VMOverride" required="true">
+          <item displayName="$(string.Snagit2025_SetVirtualMachineOptimization_Enum_None)">
             <value><string>None</string></value>
           </item>
-          <item displayName="$(string.Snagit_SetVirtualMachineOptimization_Enum_AutoDetect)">
+          <item displayName="$(string.Snagit2025_SetVirtualMachineOptimization_Enum_AutoDetect)">
             <value><string>AutoDetect</string></value>
           </item>
-          <item displayName="$(string.Snagit_SetVirtualMachineOptimization_Enum_OtherVM)">
+          <item displayName="$(string.Snagit2025_SetVirtualMachineOptimization_Enum_OtherVM)">
+            <value><string>OtherVM</string></value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+
+    <policy name="Snagit2026_SetVirtualMachineOptimization" class="Machine"
+            displayName="$(string.Snagit2026_SetVirtualMachineOptimization)"
+            explainText="$(string.Snagit2026_SetVirtualMachineOptimization_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit2026_SetVirtualMachineOptimization)">
+      <parentCategory ref="Snagit2026_Virtualization" />
+      <supportedOn ref="SUPPORTED_Snagit2026" />
+      <elements>
+        <enum id="Snagit2026_VMOverride_Enum" valueName="VMOverride" required="true">
+          <item displayName="$(string.Snagit2026_SetVirtualMachineOptimization_Enum_None)">
+            <value><string>None</string></value>
+          </item>
+          <item displayName="$(string.Snagit2026_SetVirtualMachineOptimization_Enum_AutoDetect)">
+            <value><string>AutoDetect</string></value>
+          </item>
+          <item displayName="$(string.Snagit2026_SetVirtualMachineOptimization_Enum_OtherVM)">
             <value><string>OtherVM</string></value>
           </item>
         </enum>

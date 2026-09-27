@@ -4,38 +4,61 @@
 
 # Snagit ADMX/ADML
 
-Group Policy administrative template for **TechSmith Snagit 2025 / 2026** on Windows, built for **uniform policy enforcement across an entire enterprise device fleet** - not just a one-time configuration applied at install. A single `Snagit.admx` / `Snagit.adml` pair covers machine-level (`HKLM`) and user-level (`HKCU`) settings.
+Group Policy administrative template for **TechSmith Snagit 2025 and 2026** on Windows, built for **uniform policy enforcement across an entire enterprise device fleet** - not just a one-time configuration applied at install. A single `Snagit.admx` / `Snagit.adml` pair covers machine-level (`HKLM`) and user-level (`HKCU`) settings for **both** Snagit versions, kept as separate policy sets because the two versions store their settings under different registry keys (see [Snagit 2025 vs Snagit 2026](#snagit-2025-vs-snagit-2026---pick-the-right-category) below).
 
 | ![File](https://img.shields.io/badge/File-316dca?style=flat-square) | ![Scope](https://img.shields.io/badge/Scope-316dca?style=flat-square) | ![Policies](https://img.shields.io/badge/Policies-316dca?style=flat-square) |
 |------|-------|----------|
-| `Snagit.admx` + ADML | **Snagit** (Computer + User) | 13 (12 machine + 1 user) |
+| `Snagit.admx` + ADML | **Snagit 2025** + **Snagit 2026** (Computer + User) | 26 (24 machine + 2 user - 13 settings x 2 versions) |
 
 ## Why an ADMX, not just the Deployment Tool
 
-TechSmith's own Deployment Tool (MST) and Snagit.reg import are **install-time only**: they write a set of starting values into the registry when Snagit is installed, and from that point on Snagit just uses whatever is left in that registry key - on that one machine. There's no mechanism to keep hundreds or thousands of endpoints in the same state afterward.
+TechSmith's own Deployment Tool (MST) and Snagit.reg import are **install-time only**: they write a set of starting values into the registry when Snagit is installed, and from that point on Snagit just uses whatever is left in that registry key - on that one machine. There's no built-in mechanism to keep hundreds or thousands of endpoints in the same state afterward, or to change a setting fleet-wide without re-touching every install.
 
-An ADMX/ADML template is built for exactly that: **enforcing a uniform configuration across the whole fleet, continuously, for as long as devices are joined to the policy** - not a snapshot taken once at install time.
-
-- **Enforced continuously, not just at install.** Group Policy re-applies every setting in this template on each policy refresh - at logon, on the standard background refresh cycle (every 90-120 minutes by default), and on `gpupdate /force`. If a user changes a locked-down setting, or a re-image or repair resets it, the next refresh across the fleet puts it back automatically. A one-off MST can't do that.
-- **One change, fleet-wide.** Flip a policy in a single GPO (or Intune configuration profile) and every targeted device - one or ten thousand - picks it up on its next refresh. No rebuilding an MST, no re-running the Deployment Tool, no touching individual machines.
-- **Every device stays in the same state, indefinitely.** New machines joining the fleet, re-imaged machines, and machines that have been running for years all converge on the same configuration, without anyone tracking which install used which MST.
+- **One change, fleet-wide, without rebuilding anything.** Edit a policy in a single GPO (or Intune configuration profile) and every targeted device picks it up - no rebuilding an MST, no re-running the Deployment Tool, no touching individual machines.
+- **Every device converges on the same configuration.** New machines joining the fleet, re-imaged machines, and long-running machines all end up managed the same way, without anyone tracking which install used which MST version.
+- **Re-applied whenever the policy is processed** - at logon/startup, whenever the GPO itself changes, on `gpupdate /force`, and (for Intune) on the client's periodic policy check-in. See the important caveat below on what this does and doesn't guarantee between those points.
 - **Works without touching the Snagit installation at all.** Because the template manages Snagit's real settings keys directly, you can change organization-wide behavior at any time after rollout, independent of install/upgrade cycles.
-- **Lives alongside every other application policy you manage.** Shows up natively in Group Policy Management, the Local Group Policy Editor, and Intune - the same tools and workflow admins already use to enforce fleet-wide policy for Office, Chrome, Edge, etc. No separate deployment-tool UI to learn or keep installed.
+- **Lives alongside every other application policy you manage.** Shows up natively in Group Policy Management, the Local Group Policy Editor, and Intune - the same tools and workflow admins already use for Office, Chrome, Edge, etc. No separate deployment-tool UI to learn or keep installed.
 - **Auditable and reviewable.** Settings live in a GPO/Intune profile you can inspect, diff, and roll back like any other enterprise policy, rather than being baked once into a per-deployment MST file that's easy to lose track of across a large fleet.
+
+> [!IMPORTANT]
+> **This is not the protected `HKLM\SOFTWARE\Policies\` branch - read this before relying on it for lockdown.** Snagit has no dedicated Group Policy "Policies" registry area, so this template manages Snagit's own live settings keys directly (see [Source of truth](#source-of-truth)). Two consequences:
+> - **Group Policy's default background refresh does not blindly re-write these values on every cycle.** By default, the Registry client-side extension skips reprocessing a GPO whose version hasn't changed since the last cycle. Values here get reasserted at logon/startup, whenever you actually edit the GPO (which bumps its version), on `gpupdate /force`, or fleet-wide if you enable **Computer Configuration → Administrative Templates → System → Group Policy → "Configure registry policy processing" → Process even if the Group Policy objects have not changed**. Intune's periodic device check-in re-applies its configuration profiles on its own schedule regardless, which is closer to "continuously enforced" than default GPO behavior.
+> - **Values persist ("tattoo") after the policy is removed.** Unlinking the GPO or removing the Intune profile does not revert Snagit to its defaults - the last-written value stays in the registry until something else changes it.
+> - **The two per-user settings (`TUDIOptedIn` for each version) are ordinary Snagit preferences**, not locked values - the signed-in user can change them themselves in Snagit's own settings at any time, and they will only be corrected back the next time this policy is actually (re)processed, not continuously.
+
+## Snagit 2025 vs Snagit 2026 - pick the right category
+
+**Snagit changed where it stores its settings between the 2025 and 2026 releases**, confirmed by directly inspecting the Registry table embedded in both installers (see [Verification status](#verification-status)):
+
+| Snagit version | Confirmed from build | Registry key |
+|---|---|---|
+| **Snagit 2025** | 25.4.1 | `SOFTWARE\TechSmith\Snagit\25` (versioned subfolder) |
+| **Snagit 2026** | 26.3.1 | `SOFTWARE\TechSmith\Snagit` (unversioned) |
+
+Because of this, every setting in this template exists **twice** - once under the **Snagit 2025** category and once under the **Snagit 2026** category, each pointed at the correct registry key for that version. **Configure the category that matches the Snagit version actually installed on the target machines; the other category's policies will silently do nothing if applied to the wrong version**, since Snagit only reads its own version's key.
+
+If your fleet runs a mix of Snagit 2025 and 2026, target each with its own GPO/Intune profile (e.g. scoped by an installed-application WMI filter or an Intune app-detection rule), each configuring only its matching category.
 
 ## Source of truth
 
-Snagit has no dedicated Group Policy "Policies" registry branch. TechSmith documents the settings the application itself reads from `HKLM\SOFTWARE\TechSmith\Snagit` and `HKCU\SOFTWARE\TechSmith\Snagit` in its own enterprise deployment guides, and this template targets exactly those keys - nothing invented or scraped from unofficial sources:
+Snagit has no dedicated Group Policy "Policies" registry branch. TechSmith documents the settings the application itself reads from its own registry key in a set of enterprise deployment guides, and - where those guides turned out to be wrong or to disagree with each other - this template instead follows what TechSmith's own installers (MSI) actually ship, confirmed by directly querying each installer's embedded Registry table. Nothing here is invented or scraped from unofficial/forum sources. Direct links to every document used:
 
-- **Snagit MSI Installation Guide**, version 2026.0.0 (January 2026) - TechSmith Corporation
-- **Snagit 2025 Deployment Tool Guide**, Deployment Tool v6.7.0 (August 2025) - TechSmith Corporation
+- [Snagit MSI Installation Guide, version 2026.0.0](https://www.techsmith.com/wp-content/uploads/2026/02/Snagit-MSI-Installation-Guide.pdf) (January 2026) - TechSmith Corporation
+- [Snagit 2025 MSI Installation Guide](https://www.techsmith.com/wp-content/uploads/2025/08/Snagit-MSI-Installation-Guide.pdf) (August 2025) - TechSmith Corporation - a distinct, separately-versioned document from the 2026.0.0 guide above
+- [Snagit 2025 Deployment Tool Guide, v6.7.0](https://www.techsmith.com/wp-content/uploads/2025/08/Snagit-Deployment-Tool-Guide.pdf) (August 2025) - TechSmith Corporation
+- [Install Snagit on Remote Desktop Services, version 2026.2.1](https://www.techsmith.com/wp-content/uploads/2026/05/Install-Snagit-on-Remote-Desktop-Services.pdf) (May 2026) - TechSmith Corporation
+- The Registry and Property tables embedded in the official Snagit installers themselves: `snagit.msi` build **26.3.1** (current Snagit 2026 release) and build **25.4.1** (Snagit 2025 release branch), both downloaded directly from TechSmith's own release CDN and queried read-only via the Windows Installer API - no installation performed
 
-Both are published on TechSmith's [Software Deployment & Resources](https://www.techsmith.com/) pages for Snagit administrators.
+> [!NOTE]
+> **Where TechSmith's own guides disagreed, and how it was resolved.** The 2025 MSI Installation Guide's registry examples use `HKEY_LOCAL_MACHINE\Software\TechSmith\Snagit\25\`; the 2026.0.0 guide and the May 2026 RDS guide both use the unversioned path instead. Querying the actual installers directly confirmed the 2025 guide's *path* is correct for Snagit 2025 - but also caught a **separate** error: that same 2025 guide's prose lists the Library-location value as `DataStoreLocation`, when the real installer (both 2025 and 2026) ships it as `LibraryStoreDirectory`. Both corrections are reflected in this template; see [Verification status](#verification-status) for the full list of what was checked this way.
 
 > [!IMPORTANT]
 > This template does **not** include a license/registration key policy. Product keys should always be your own organization's legitimately purchased license, deployed through TechSmith's own **Deployment Tool** (which generates an MST with the `TSC_SOFTWARE_KEY` property) - not hardcoded into a redistributed template. See [TechSmith's Software Key FAQ](https://support.techsmith.com/hc/en-us/articles/204623018) if you need to locate your organization's key.
 
 ## Category overview
+
+Each of the following exists once under **Snagit 2025** and once under **Snagit 2026**:
 
 | ![Category](https://img.shields.io/badge/Category-316dca?style=flat-square) | ![Description](https://img.shields.io/badge/Description-316dca?style=flat-square) | ![Scope](https://img.shields.io/badge/Scope-316dca?style=flat-square) |
 |------|-------------|:---:|
@@ -47,27 +70,45 @@ Both are published on TechSmith's [Software Deployment & Resources](https://www.
 
 ## Policy reference
 
+Registry value names are identical between versions - only the base key differs (`SOFTWARE\TechSmith\Snagit\25` for 2025, `SOFTWARE\TechSmith\Snagit` for 2026, both under `HKEY_LOCAL_MACHINE` except the one `HKEY_CURRENT_USER` setting noted below).
+
 | Policy | Scope | Registry value | Type |
 |---|---|---|---|
 | Disable Image Capture | Machine | `NoImageCaptureSupport` | DWORD |
 | Disable Video Capture | Machine | `NoVideoCaptureSupport` | DWORD |
 | Disable Printer Capture | Machine | `NoPrinterCaptureSupport` | DWORD |
 | Disable Automatic Updates | Machine | `NoAutoUpdateSupport` | DWORD |
-| Configure Auto-Update Proxy Server List | Machine | `UpdaterProxyList` | REG_SZ |
+| Configure Auto-Update Proxy Server List | Machine | `UpdateProxyList` | REG_SZ |
 | Disable Online Registration Dialog | Machine | `NoRegistrationDialogSupport` | DWORD |
 | Allow In-Product Notifications | Machine | `TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW` | DWORD |
-| Allow Anonymous Usage Reporting (TUDI) | User | `TUDIOptedIn` | DWORD |
+| Allow Anonymous Usage Reporting (TUDI) | **User** | `TUDIOptedIn` | DWORD |
 | Disable Snagit Library Location Change | Machine | `DataStoreNoMove` | DWORD |
-| Set Snagit Library (Auto-Stored Files) Location | Machine | `DataStoreLocation` | REG_SZ |
+| Set Snagit Library (Auto-Stored Files) Location | Machine | `LibraryStoreDirectory` | REG_SZ |
 | Set User Settings (AppData) Path | Machine | `AppDataPath` | REG_SZ |
 | Set Snagit Outputs Install Path | Machine | `AccessoryInstallPath` | REG_SZ |
 | Set Virtual Machine Display Optimization | Machine | `VMOverride` | REG_SZ (`None` / `AutoDetect` / `OtherVM`) |
 
-All machine-scope values live under `HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit`; the one user-scope value lives under `HKEY_CURRENT_USER\SOFTWARE\TechSmith\Snagit`. These are Snagit's own live settings keys, so Group Policy simply manages the same values the Snagit UI and the TechSmith Deployment Tool would otherwise write.
+These are Snagit's own live settings keys, so Group Policy simply manages the same values the Snagit UI and the TechSmith Deployment Tool would otherwise write.
+
+## Verification status
+
+Not every value here carries the same level of confidence. To be specific about what's been checked and how:
+
+**Empirically confirmed** - checked directly against the Registry table embedded in the real Snagit installers (builds 25.4.1 and 26.3.1), independent of what TechSmith's written guides say:
+- The registry key itself: versioned (`...\Snagit\25`) for 2025, unversioned (`...\Snagit`) for 2026
+- `NoImageCaptureSupport`, `NoVideoCaptureSupport`, `NoPrinterCaptureSupport`, `NoAutoUpdateSupport`, `NoRegistrationDialogSupport`, `AppDataPath`, `VMOverride`, `DataStoreNoMove`, `TUDIOptedIn` (all identical between versions, differing only by base key)
+- `LibraryStoreDirectory` - confirmed as the real value in both versions; TechSmith's own MSI guides print the older `DataStoreLocation` name in their prose, which does not match either shipping installer
+- `UpdateProxyList` - confirmed as the real value in both versions; an earlier revision of this template used the guessed, incorrect name `UpdaterProxyList`, which does not exist in either installer
+
+**Documented but not found in either installer's static Registry table** - these two settings aren't backed by a declarative MSI Property-to-registry mapping in either installer (which just means TechSmith implements them a different way internally, e.g. a custom action, or as a value the app reads without any installer-driven default at all - not that they're wrong):
+- `AccessoryInstallPath` - documented in the MSI guides' "Features" list, and independently confirmed via a live regedit walkthrough in the May 2026 RDS deployment guide
+- `TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW` - documented only in the MSI guides' "Features" list (both the 2025 and 2026 editions, identical wording); never listed as an MSI Property at all, so there was never a Transform-driven path to check it against
+
+**Not yet independently live-tested** - this template has been checked against TechSmith's documentation and the real installers' declarative install-time behavior, but not yet against a live install where every policy is set via actual Group Policy/Intune and the resulting Snagit behavior is observed directly. If you do this verification (e.g. in a Windows Sandbox or test VM against real Snagit 2025 and 2026 installs, or via a test Intune ADMX import), issues or confirmations are welcome.
 
 ## Curated presets
 
-Beyond the raw policy list, [`Documentation/presets/`](Documentation/presets/) has ready-made bundles for common deployment scenarios, each with a matching double-click `.reg` file under [`Presets/`](Presets/) for a quick single-machine test - though for actual fleet-wide enforcement, use the equivalent policies in `Snagit.admx` via Group Policy or Intune rather than the `.reg` files, so the settings are reapplied automatically instead of being a one-time write.
+Beyond the raw policy list, [`Documentation/presets/`](Documentation/presets/) has ready-made bundles for common deployment scenarios, each with a matching double-click `.reg` file under [`Presets/`](Presets/) for a quick single-machine test. Each `.reg` file includes **both** the Snagit 2025 and Snagit 2026 registry sections - only the section matching the installed version actually takes effect, so you don't need to know the exact version up front for a one-off test. A `.reg` import is a one-time write with nothing to re-apply it later; for fleet-wide management where you want the settings centrally controlled and re-processed on the normal policy schedule, use the equivalent policies in `Snagit.admx` (under the category matching your Snagit version) via Group Policy or Intune instead.
 
 | ![Preset](https://img.shields.io/badge/Preset-316dca?style=flat-square) | ![Scenario](https://img.shields.io/badge/Scenario-316dca?style=flat-square) |
 |------|-------------|
@@ -83,8 +124,8 @@ Full index: [Documentation/presets/README.md](Documentation/presets/README.md).
    - Central Store: `\\<domain>\SYSVOL\<domain>\Policies\PolicyDefinitions\`
    - Local machine (single PC / testing): `C:\Windows\PolicyDefinitions\`
 2. Copy `policyDefinitions\en-US\Snagit.adml` to the matching `en-US` subfolder in the same location.
-3. Open Group Policy Management Editor (or the Local Group Policy Editor) - the settings appear under **Computer Configuration \ Administrative Templates \ TechSmith Snagit** and **User Configuration \ Administrative Templates \ TechSmith Snagit**.
-4. Configure the policies you need, then deploy the GPO as normal.
+3. Open Group Policy Management Editor (or the Local Group Policy Editor) - the settings appear under **Computer Configuration \ Administrative Templates \ Snagit** and **User Configuration \ Administrative Templates \ Snagit**, each with a **Snagit 2025** and a **Snagit 2026** sub-node.
+4. Configure the policies under the sub-node matching the Snagit version actually installed on your target machines (see [Snagit 2025 vs Snagit 2026](#snagit-2025-vs-snagit-2026---pick-the-right-category)), then deploy the GPO as normal.
 
 For Intune, upload `Snagit.admx` and `Snagit.adml` together as an [ADMX ingestion / imported administrative template](https://learn.microsoft.com/mem/intune/configuration/administrative-templates-import-custom).
 

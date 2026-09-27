@@ -3,8 +3,19 @@ Windows Registry Editor Version 5.00
 ; RDS / VDI Deployment
 ; Tuned for Remote Desktop Services, Citrix, or non-persistent VDI hosts: applies TechSmith's documented virtualization optimizations, removes the printer-capture destination, keeps the Snagit Library path fixed, and puts update timing under IT control.
 ;
+; Snagit 2025 and Snagit 2026 store these settings under different registry keys.
+; This file includes both; only the section matching your installed Snagit version
+; actually takes effect - the other is harmless and unused.
 ; HKEY_CURRENT_USER lines apply per-user; import under the target user's profile (or HKEY_USERS\<SID>\...).
 
+; ----- Snagit 2025 -----
+[HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit\25]
+"VMOverride"="OtherVM"
+"NoPrinterCaptureSupport"=dword:00000001
+"DataStoreNoMove"=dword:00000001
+"NoAutoUpdateSupport"=dword:00000001
+
+; ----- Snagit 2026 -----
 [HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit]
 "VMOverride"="OtherVM"
 "NoPrinterCaptureSupport"=dword:00000001
