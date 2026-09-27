@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="snagit" namespace="TechSmith.Policies.Snagit" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <supportedOn>
+    <definitions>
+      <definition name="SUPPORTED_Snagit2025" displayName="$(string.SUPPORTED_Snagit2025)" />
+      <definition name="SUPPORTED_Snagit2026" displayName="$(string.SUPPORTED_Snagit2026)" />
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="Snagit" displayName="$(string.Snagit)" explainText="$(string.Snagit_Explain)" />
+    <category name="Snagit_Capture" displayName="$(string.Snagit_Capture)">
+      <parentCategory ref="Snagit" />
+    </category>
+    <category name="Snagit_Updates" displayName="$(string.Snagit_Updates)">
+      <parentCategory ref="Snagit" />
+    </category>
+    <category name="Snagit_Privacy" displayName="$(string.Snagit_Privacy)">
+      <parentCategory ref="Snagit" />
+    </category>
+    <category name="Snagit_Storage" displayName="$(string.Snagit_Storage)">
+      <parentCategory ref="Snagit" />
+    </category>
+    <category name="Snagit_Virtualization" displayName="$(string.Snagit_Virtualization)">
+      <parentCategory ref="Snagit" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="Snagit_DisableImageCapture" class="Machine"
+            displayName="$(string.Snagit_DisableImageCapture)"
+            explainText="$(string.Snagit_DisableImageCapture_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="NoImageCaptureSupport">
+      <parentCategory ref="Snagit_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_DisableVideoCapture" class="Machine"
+            displayName="$(string.Snagit_DisableVideoCapture)"
+            explainText="$(string.Snagit_DisableVideoCapture_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="NoVideoCaptureSupport">
+      <parentCategory ref="Snagit_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_DisablePrinterCapture" class="Machine"
+            displayName="$(string.Snagit_DisablePrinterCapture)"
+            explainText="$(string.Snagit_DisablePrinterCapture_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="NoPrinterCaptureSupport">
+      <parentCategory ref="Snagit_Capture" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_DisableAutoUpdate" class="Machine"
+            displayName="$(string.Snagit_DisableAutoUpdate)"
+            explainText="$(string.Snagit_DisableAutoUpdate_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="NoAutoUpdateSupport">
+      <parentCategory ref="Snagit_Updates" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_UpdaterProxyList" class="Machine"
+            displayName="$(string.Snagit_UpdaterProxyList)"
+            explainText="$(string.Snagit_UpdaterProxyList_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_UpdaterProxyList)">
+      <parentCategory ref="Snagit_Updates" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <text id="Snagit_UpdaterProxyList_Text" valueName="UpdaterProxyList" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit_DisableRegistrationDialog" class="Machine"
+            displayName="$(string.Snagit_DisableRegistrationDialog)"
+            explainText="$(string.Snagit_DisableRegistrationDialog_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="NoRegistrationDialogSupport">
+      <parentCategory ref="Snagit_Privacy" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_AllowInProductNotifications" class="Machine"
+            displayName="$(string.Snagit_AllowInProductNotifications)"
+            explainText="$(string.Snagit_AllowInProductNotifications_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW">
+      <parentCategory ref="Snagit_Privacy" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_AllowAnonymousUsageReporting" class="User"
+            displayName="$(string.Snagit_AllowAnonymousUsageReporting)"
+            explainText="$(string.Snagit_AllowAnonymousUsageReporting_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="TUDIOptedIn">
+      <parentCategory ref="Snagit_Privacy" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_DisableLibraryLocationChange" class="Machine"
+            displayName="$(string.Snagit_DisableLibraryLocationChange)"
+            explainText="$(string.Snagit_DisableLibraryLocationChange_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" valueName="DataStoreNoMove">
+      <parentCategory ref="Snagit_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="Snagit_SetLibraryLocation" class="Machine"
+            displayName="$(string.Snagit_SetLibraryLocation)"
+            explainText="$(string.Snagit_SetLibraryLocation_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetLibraryLocation)">
+      <parentCategory ref="Snagit_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <text id="Snagit_SetLibraryLocation_Text" valueName="DataStoreLocation" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit_SetUserSettingsPath" class="Machine"
+            displayName="$(string.Snagit_SetUserSettingsPath)"
+            explainText="$(string.Snagit_SetUserSettingsPath_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetUserSettingsPath)">
+      <parentCategory ref="Snagit_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <text id="Snagit_SetUserSettingsPath_Text" valueName="AppDataPath" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit_SetOutputsInstallPath" class="Machine"
+            displayName="$(string.Snagit_SetOutputsInstallPath)"
+            explainText="$(string.Snagit_SetOutputsInstallPath_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetOutputsInstallPath)">
+      <parentCategory ref="Snagit_Storage" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <text id="Snagit_SetOutputsInstallPath_Text" valueName="AccessoryInstallPath" required="false" />
+      </elements>
+    </policy>
+
+    <policy name="Snagit_SetVirtualMachineOptimization" class="Machine"
+            displayName="$(string.Snagit_SetVirtualMachineOptimization)"
+            explainText="$(string.Snagit_SetVirtualMachineOptimization_Explain)"
+            key="SOFTWARE\TechSmith\Snagit" presentation="$(presentation.Snagit_SetVirtualMachineOptimization)">
+      <parentCategory ref="Snagit_Virtualization" />
+      <supportedOn ref="SUPPORTED_Snagit2025" />
+      <elements>
+        <enum id="Snagit_VMOverride_Enum" valueName="VMOverride" required="true">
+          <item displayName="$(string.Snagit_SetVirtualMachineOptimization_Enum_None)">
+            <value><string>None</string></value>
+          </item>
+          <item displayName="$(string.Snagit_SetVirtualMachineOptimization_Enum_AutoDetect)">
+            <value><string>AutoDetect</string></value>
+          </item>
+          <item displayName="$(string.Snagit_SetVirtualMachineOptimization_Enum_OtherVM)">
+            <value><string>OtherVM</string></value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+
+  </policies>
+</policyDefinitions>

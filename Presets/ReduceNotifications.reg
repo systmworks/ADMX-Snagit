@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+; Reduce Notifications & Prompts
+; Suppresses the post-install registration dialog and in-product promotional/help notification banners, for organizations that deploy a site key centrally and don't want users seeing registration or upsell-style prompts.
+;
+; HKEY_CURRENT_USER lines apply per-user; import under the target user's profile (or HKEY_USERS\<SID>\...).
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit]
+"NoRegistrationDialogSupport"=dword:00000001
+"TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\TechSmith\Snagit]
+"TUDIOptedIn"=dword:00000000
+

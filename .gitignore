@@ -1,0 +1,4 @@
+# Private build tooling - not published to the public repo.
+# The finished output (policyDefinitions/, Presets/, Documentation/) is what ships.
+/Source/
+/Helper_Scripts/

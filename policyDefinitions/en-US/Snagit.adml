@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>TechSmith Snagit Administrative Template</displayName>
+  <description>Group Policy settings for TechSmith Snagit 2025/2026, sourced from TechSmith's official Snagit MSI Installation Guide (v2026.0.0, January 2026) and Snagit Deployment Tool Guide (August 2025). This template does not include any license/registration key policy; enter your organization's own key using the TechSmith Deployment Tool.</description>
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_Snagit2025">TechSmith Snagit 2025 or later</string>
+      <string id="SUPPORTED_Snagit2026">TechSmith Snagit 2026 or later</string>
+      <string id="Snagit">Snagit</string>
+      <string id="Snagit_Explain">Administrative template settings for TechSmith Snagit 2025/2026. These policies write directly to the registry keys Snagit reads at runtime (HKLM/HKCU\SOFTWARE\TechSmith\Snagit), as documented in TechSmith&apos;s official Snagit MSI Installation Guide. Snagit has no dedicated &quot;Policies&quot; registry branch, so these values are the application&apos;s own settings keys managed via Group Policy.</string>
+      <string id="Snagit_Capture">Capture Options</string>
+      <string id="Snagit_Updates">Automatic Updates</string>
+      <string id="Snagit_Privacy">Privacy and Notifications</string>
+      <string id="Snagit_Storage">Storage Locations</string>
+      <string id="Snagit_Virtualization">Virtualization</string>
+      <string id="Snagit_DisableImageCapture">Disable Image Capture</string>
+      <string id="Snagit_DisableImageCapture_Explain">Disables Snagit&apos;s image capture functionality (region, window, scrolling window, and full-screen captures) for every user of the machine.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!NoImageCaptureSupport to 1.
+
+Important: TechSmith strongly recommends against disabling this setting, as it severely restricts Snagit&apos;s core functionality.
+
+If you disable this policy or do not configure it, image capture remains available.</string>
+      <string id="Snagit_DisableVideoCapture">Disable Video Capture</string>
+      <string id="Snagit_DisableVideoCapture_Explain">Disables Snagit&apos;s video recording functionality.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!NoVideoCaptureSupport to 1.
+
+Important: TechSmith strongly recommends against disabling this setting, as it severely restricts Snagit&apos;s core functionality.
+
+If you disable this policy or do not configure it, video capture remains available.</string>
+      <string id="Snagit_DisablePrinterCapture">Disable Printer Capture</string>
+      <string id="Snagit_DisablePrinterCapture_Explain">Prevents Snagit from installing as a printer destination for programs with printing capability (the &quot;Snagit Printer&quot; capture method).
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!NoPrinterCaptureSupport to 1.
+
+Consider enabling this policy when deploying Snagit in a server environment (e.g. Remote Desktop Services).
+
+If you disable this policy or do not configure it, printer capture remains available.</string>
+      <string id="Snagit_DisableAutoUpdate">Disable Automatic Updates</string>
+      <string id="Snagit_DisableAutoUpdate_Explain">Prevents Snagit from automatically checking for and prompting about new versions. Automatic updates use the Windows Background Intelligent Transfer Service (BITS).
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!NoAutoUpdateSupport to 1.
+
+Enable this policy if you want to control application updates centrally rather than allowing users to update Snagit themselves.
+
+If you disable this policy or do not configure it, Snagit checks for updates automatically.</string>
+      <string id="Snagit_UpdaterProxyList">Configure Auto-Update Proxy Server List</string>
+      <string id="Snagit_UpdaterProxyList_Explain">Provides a custom list of proxy servers for BITS to use when Snagit downloads updates. Separate each proxy server entry with a blank space, e.g.:
+http=http://10.120.98.6:80 https=https://10.120.98.6
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!UpdaterProxyList (REG_SZ).
+
+If you disable this policy or do not configure it, no custom proxy list is applied.</string>
+      <string id="Snagit_DisableRegistrationDialog">Disable Online Registration Dialog</string>
+      <string id="Snagit_DisableRegistrationDialog_Explain">Prevents the Snagit online registration dialog from displaying after installation. Recommended when a software key has already been deployed via the TechSmith Deployment Tool, to avoid users re-registering or entering conflicting information.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!NoRegistrationDialogSupport to 1.
+
+If you disable this policy or do not configure it, the registration dialog may be shown to users.</string>
+      <string id="Snagit_AllowInProductNotifications">Allow In-Product Notifications</string>
+      <string id="Snagit_AllowInProductNotifications_Explain">Controls whether Snagit shows in-product help and promotional notification banners.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!TSC_IN_PRODUCT_NOTIFICATIONS_ALLOW to 1 (Enabled/allowed) or 0 (Disabled/suppressed).
+
+If you do not configure this policy, Snagit uses its default behavior (notifications allowed).</string>
+      <string id="Snagit_AllowAnonymousUsageReporting">Allow Anonymous Usage Reporting (TUDI)</string>
+      <string id="Snagit_AllowAnonymousUsageReporting_Explain">Controls whether Snagit sends anonymous usage data to TechSmith to help improve future versions. This option must be enabled for users to receive contextual, in-app help and onboarding content relevant to how they use the app.
+
+Sets HKCU\SOFTWARE\TechSmith\Snagit!TUDIOptedIn to 1 (Enabled/opted in) or 0 (Disabled/opted out).
+
+Consider disabling this policy where internet security requirements restrict users from sending data to TechSmith, or to opt out of the feedback program.
+
+If you do not configure this policy, Snagit uses the user&apos;s own preference or default.</string>
+      <string id="Snagit_DisableLibraryLocationChange">Disable Snagit Library Location Change</string>
+      <string id="Snagit_DisableLibraryLocationChange_Explain">Hides the option that lets users change where Snagit automatically stores captured files (the Snagit Library), in Snagit Editor under Edit &gt; Editor Preferences &gt; Library tab. Recommended to prevent users from losing data and to keep the library location standardized.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!DataStoreNoMove to 1.
+
+If you disable this policy or do not configure it, users can change the library location themselves.</string>
+      <string id="Snagit_SetLibraryLocation">Set Snagit Library (Auto-Stored Files) Location</string>
+      <string id="Snagit_SetLibraryLocation_Explain">Sets the folder where Snagit automatically stores all captures and their metadata (the Snagit Library). The default is %USERPROFILE%\Documents\Snagit\.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!DataStoreLocation (REG_SZ) to the path you specify.
+
+Note: TechSmith recommends a local, unmapped folder. Pointing this at a network drive limits file counts, search, filter categories, and tagging.
+
+If you disable this policy or do not configure it, Snagit uses its default library location.</string>
+      <string id="Snagit_SetUserSettingsPath">Set User Settings (AppData) Path</string>
+      <string id="Snagit_SetUserSettingsPath_Explain">Sets the folder used to store per-user Snagit settings such as Quick Styles, cached thumbnails, and accessories. The default is %LOCALAPPDATA%\TechSmith\Snagit.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!AppDataPath (REG_SZ) to the path you specify. Include environment variables such as %USERNAME% to keep the location unique per user.
+
+If you disable this policy or do not configure it, Snagit uses its default user settings location.</string>
+      <string id="Snagit_SetOutputsInstallPath">Set Snagit Outputs Install Path</string>
+      <string id="Snagit_SetOutputsInstallPath_Explain">Sets the folder where Snagit installs its share/output accessory files.
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!AccessoryInstallPath (REG_SZ) to the path you specify.
+
+If you disable this policy or do not configure it, Snagit uses its default outputs install location.</string>
+      <string id="Snagit_SetVirtualMachineOptimization">Set Virtual Machine Display Optimization</string>
+      <string id="Snagit_SetVirtualMachineOptimization_Explain">Controls whether Snagit applies performance/display optimizations for virtualized environments (simplified crosshairs, removed shadow/animation effects, reduced visual changes for large or virtual desktops).
+
+Sets HKLM\SOFTWARE\TechSmith\Snagit!VMOverride (REG_SZ) to one of: None (never apply), AutoDetect (apply only when a VM is detected), or OtherVM (always apply).
+
+TechSmith recommends OtherVM when deploying with virtualization technologies.
+
+If you disable this policy or do not configure it, Snagit uses its default (AutoDetect) behavior.</string>
+      <string id="Snagit_SetVirtualMachineOptimization_Enum_None">None - never optimize</string>
+      <string id="Snagit_SetVirtualMachineOptimization_Enum_AutoDetect">AutoDetect - optimize only when a VM is detected</string>
+      <string id="Snagit_SetVirtualMachineOptimization_Enum_OtherVM">OtherVM - always optimize</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Snagit_UpdaterProxyList">
+        <textBox refId="Snagit_UpdaterProxyList_Text">
+          <label>Proxy server list (space-separated):</label>
+        </textBox>
+      </presentation>
+      <presentation id="Snagit_SetLibraryLocation">
+        <textBox refId="Snagit_SetLibraryLocation_Text">
+          <label>Library folder path:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Snagit_SetUserSettingsPath">
+        <textBox refId="Snagit_SetUserSettingsPath_Text">
+          <label>User settings folder path:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Snagit_SetOutputsInstallPath">
+        <textBox refId="Snagit_SetOutputsInstallPath_Text">
+          <label>Outputs install folder path:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Snagit_SetVirtualMachineOptimization">
+        <dropdownList refId="Snagit_VMOverride_Enum" defaultItem="0">Virtual Machine Optimization:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

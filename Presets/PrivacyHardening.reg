@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+; Privacy Hardening
+; Minimizes what Snagit sends outside the organization's network and keeps updates under administrative control, for environments with internet security restrictions or data-egress policies.
+;
+; HKEY_CURRENT_USER lines apply per-user; import under the target user's profile (or HKEY_USERS\<SID>\...).
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\TechSmith\Snagit]
+"NoRegistrationDialogSupport"=dword:00000001
+"NoAutoUpdateSupport"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\TechSmith\Snagit]
+"TUDIOptedIn"=dword:00000000
+
