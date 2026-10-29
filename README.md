@@ -2,11 +2,6 @@
 
 > I have spent many, many hours creating and testing this ADMX. If it helps you please consider buying me a Coffee :)
 
-> [!TIP]
-> **Coming soon: ADMX Pro.** Ready-to-import Intune & GPO profiles (Security Hardened · STIG-aligned · No Nags & Upsells),
-> re-tested against every vendor release, plus an email alert when a vendor changes or breaks a setting.
-> **[Join the waitlist →](https://tally.so/r/7RGrVR)** (free, no spam, one email when it launches)
-
 # Snagit ADMX/ADML
 
 Group Policy administrative template for **TechSmith Snagit 2025 and 2026** on Windows, built for **uniform policy enforcement across an entire enterprise device fleet** - not just a one-time configuration applied at install. A single `Snagit.admx` / `Snagit.adml` pair covers machine-level (`HKLM`) and user-level (`HKCU`) settings for **both** Snagit versions, kept as separate policy sets because the two versions store their settings under different registry keys (see [Snagit 2025 vs Snagit 2026](#snagit-2025-vs-snagit-2026---pick-the-right-category) below).
